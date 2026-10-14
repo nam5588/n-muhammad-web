@@ -31,9 +31,31 @@
   text-underline-offset: 3px;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btnSecondary {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 18px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
 .btn {
   display: inline-block;
-  margin-top: 24px;
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;

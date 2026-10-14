@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Nav from '@/components/Nav';
-import { projects } from '@/lib/projects';
+import { getProjects, type ProjectStatus } from '@/lib/cms';
 import { pageMetadata } from '@/lib/site';
 import styles from './projects.module.css';
 
@@ -11,13 +11,21 @@ export const metadata: Metadata = pageMetadata({
   path: '/projects',
 });
 
-const statusLabel: Record<string, string> = {
-  live: 'Live',
-  wip: 'In progress',
-  archived: 'Archived',
+const statusLabel: Record<ProjectStatus, string> = {
+  LIVE: 'Live',
+  IN_PROGRESS: 'In progress',
+  ARCHIVED: 'Archived',
 };
 
-export default function Projects() {
+const statusClass: Record<ProjectStatus, string> = {
+  LIVE: styles.live,
+  IN_PROGRESS: styles.wip,
+  ARCHIVED: styles.archived,
+};
+
+export default async function Projects() {
+  const projects = await getProjects();
+
   return (
     <>
       <Nav />
@@ -29,8 +37,8 @@ export default function Projects() {
           {projects.map((project) => (
             <div key={project.slug} className={styles.project}>
               <div className={styles.projectHeader}>
-                <h2 className={styles.projectName}>{project.name}</h2>
-                <span className={`${styles.status} ${styles[project.status]}`}>
+                <h2 className={styles.projectName}>{project.title}</h2>
+                <span className={`${styles.status} ${statusClass[project.status]}`}>
                   {statusLabel[project.status]}
                 </span>
               </div>
@@ -39,16 +47,16 @@ export default function Projects() {
 
               <div className={styles.footer}>
                 <div className={styles.tags}>
-                  {project.tags.map((tag) => (
+                  {project.techStack.map((tag) => (
                     <span key={tag} className={styles.tag}>{tag}</span>
                   ))}
                   <span className={styles.year}>{project.year}</span>
                 </div>
 
                 <div className={styles.links}>
-                  {project.url && (
+                  {project.liveUrl && (
                     <a
-                      href={project.url}
+                      href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.link}
@@ -56,9 +64,9 @@ export default function Projects() {
                       Visit →
                     </a>
                   )}
-                  {project.github && (
+                  {project.githubUrl && (
                     <a
-                      href={project.github}
+                      href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.link}

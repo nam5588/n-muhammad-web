@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
+import { ABOUT_FALLBACK } from "@/lib/about-fallback";
+import { getActiveDocuments, getProfile, pickDocument } from "@/lib/cms";
+import { renderMarkdown } from "@/lib/markdown";
 import { pageMetadata } from "@/lib/site";
 import styles from "./about.module.css";
 
@@ -10,53 +13,39 @@ export const metadata: Metadata = pageMetadata({
 	path: "/about",
 });
 
-export default function About() {
+export default async function About() {
+	const [profile, docs] = await Promise.all([getProfile(), getActiveDocuments()]);
+	const bio = profile?.bio.trim() || ABOUT_FALLBACK;
+	const resume = pickDocument(docs, "RESUME");
+	const portfolio = pickDocument(docs, "PORTFOLIO");
+
 	return (
 		<>
 			<Nav />
 			<main className={styles.main}>
 				<h1 className={styles.title}>About me</h1>
 
-				<div className={styles.body}>
-					<p>
-						Hey, I'm <strong>Mukhammad Numonkhujaev</strong> — a second-year
-						software engineering student at Kookmin University in Seoul, studying
-						on the Global Korea Scholarship (GKS).
-					</p>
-					<p>
-						Alongside my studies I work as a freelance full-stack developer. I
-						build with Next.js, NestJS, GraphQL and MongoDB, and several of my
-						projects are live and used by real customers — from a K-drama based
-						Korean learning platform to a restaurant management system for a
-						teahouse in Uzbekistan.
-					</p>
-					<p>
-						You can reach me on{" "}
-						<a
-							href="https://t.me/muhammad731"
-							target="_blank"
-							rel="noopener noreferrer">
-							Telegram
-						</a>{" "}
-						or{" "}
-						<a
-							href="https://linkedin.com/in/mukhammad-numonkhujaev-3122b1361"
-							target="_blank"
-							rel="noopener noreferrer">
-							LinkedIn
-						</a>
-						. I'm always happy to talk about ideas, products, or anything
-						interesting.
-					</p>
-				</div>
+				<div className={styles.body} dangerouslySetInnerHTML={{ __html: renderMarkdown(bio) }} />
 
-				<a
-					href="https://t.me/muhammad731"
-					target="_blank"
-					rel="noopener noreferrer"
-					className={styles.btn}>
-					Message on Telegram
-				</a>
+				<div className={styles.actions}>
+					<a
+						href="https://t.me/muhammad731"
+						target="_blank"
+						rel="noopener noreferrer"
+						className={styles.btn}>
+						Message on Telegram
+					</a>
+					{resume && (
+						<a href="/resume" target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
+							Resume (PDF)
+						</a>
+					)}
+					{portfolio && (
+						<a href="/portfolio" target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
+							Portfolio (PDF)
+						</a>
+					)}
+				</div>
 			</main>
 		</>
 	);

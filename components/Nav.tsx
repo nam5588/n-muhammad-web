@@ -7,6 +7,7 @@ import styles from "./Nav.module.css";
 
 const links = [
 	{ href: "/projects", label: "Projects" },
+	{ href: "/blog", label: "Blog" },
 	{ href: "/about", label: "About" },
 	{ href: "https://t.me/s/na_mukhammad", label: "Channel", external: true },
 ];
@@ -52,7 +53,7 @@ export default function Nav() {
 						<Link
 							key={link.href}
 							href={link.href}
-							className={`${styles.link} ${pathname === link.href ? styles.active : ""}`}>
+							className={`${styles.link} ${pathname === link.href || pathname.startsWith(`${link.href}/`) ? styles.active : ""}`}>
 							{link.label}
 						</Link>
 					),

@@ -60,3 +60,33 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Blog post matni (Markdown'dan) */
+.prose {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--fg);
+  margin-top: 28px;
+  overflow-wrap: break-word;
+}
+.prose > * + * { margin-top: 18px; }
+.prose h1, .prose h2, .prose h3, .prose h4 { font-family: var(--font-serif); font-weight: 500; line-height: 1.3; margin-top: 36px; }
+.prose h1 { font-size: 26px; }
+.prose h2 { font-size: 22px; }
+.prose h3 { font-size: 18px; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose strong { font-weight: 500; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose li + li { margin-top: 6px; }
+.prose li input[type="checkbox"] { margin-right: 6px; }
+.prose blockquote { border-left: 2px solid var(--border); padding-left: 16px; color: var(--muted); }
+.prose code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; background: var(--hover-bg); padding: 1px 5px; border-radius: 4px; }
+.prose pre { background: var(--hover-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+.prose pre code { background: none; padding: 0; font-size: 13px; }
+.prose img { max-width: 100%; height: auto; border-radius: 8px; display: block; }
+.prose hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 14px; display: block; overflow-x: auto; }
+.prose th, .prose td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+.prose mark { background: #fbe7a1; color: #1a1a18; padding: 0 2px; border-radius: 2px; }
+.prose .spoiler { background: var(--fg); color: transparent; border-radius: 3px; cursor: pointer; transition: color 0.2s, background 0.2s; }
+.prose .spoiler:hover, .prose .spoiler:focus { background: var(--hover-bg); color: var(--fg); }

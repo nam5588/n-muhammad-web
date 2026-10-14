@@ -13,11 +13,17 @@ export function pageMetadata({
 	title,
 	description,
 	path,
+	image,
+	article,
 }: {
 	title: string;
 	description: string;
 	path: string;
+	/** Berilmasa umumiy OG rasm (app/opengraph-image.tsx) */
+	image?: string;
+	article?: { publishedTime: string; modifiedTime: string; tags: string[] };
 }): Metadata {
+	const ogImage = image ? { url: image, alt: title } : OG_IMAGE;
 	return {
 		title,
 		description,
@@ -28,14 +34,16 @@ export function pageMetadata({
 			url: path,
 			siteName: SITE_NAME,
 			locale: "en_US",
-			type: "website",
-			images: [OG_IMAGE],
+			images: [ogImage],
+			...(article
+				? { type: "article", publishedTime: article.publishedTime, modifiedTime: article.modifiedTime, tags: article.tags }
+				: { type: "website" }),
 		},
 		twitter: {
 			card: "summary_large_image",
 			title,
 			description,
-			images: [OG_IMAGE.url],
+			images: [ogImage.url],
 		},
 	};
 }
