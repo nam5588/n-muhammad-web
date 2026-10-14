@@ -1,5 +1,6 @@
 .main {
-  max-width: 560px;
+  max-width: 720px;
+  width: 100%;
   margin: 0 auto;
   padding: 64px 24px 80px;
   flex: 1;
@@ -16,48 +17,97 @@
 .subtitle {
   font-size: 14px;
   color: var(--muted);
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
+/* Thumbnail list: rasm chapda, matn o'ngda */
 .list {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 4px;
 }
 
-.project {
-  padding: 22px 0;
-  border-bottom: 1px solid var(--border);
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 16px;
+  margin: 0 -16px;
+  border-radius: 12px;
+  transition: background-color 0.15s;
 }
 
-.project:first-child {
-  border-top: 1px solid var(--border);
+.row:hover {
+  background: var(--hover-bg);
 }
 
-.image {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+.thumb {
+  aspect-ratio: 16 / 10;
   border-radius: 8px;
+  overflow: hidden;
   border: 1px solid var(--border);
   background: var(--hover-bg);
-  margin-bottom: 16px;
+  display: grid;
+  place-items: center;
 }
 
-.projectHeader {
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.row:hover .thumb img {
+  transform: scale(1.03);
+}
+
+.thumb span {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--muted);
+}
+
+.body {
+  min-width: 0;
+}
+
+.head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
-.projectName {
+.name {
   font-size: 15px;
   font-weight: 500;
   color: var(--fg);
+  line-height: 1.35;
+}
+
+.stretched {
+  text-decoration: none;
+}
+
+.stretched::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+
+.stretched:focus-visible {
+  outline: none;
+}
+
+.stretched:focus-visible::after {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
 }
 
 .status {
@@ -66,6 +116,7 @@
   padding: 2px 8px;
   border-radius: 20px;
   white-space: nowrap;
+  flex: none;
 }
 
 .live {
@@ -84,18 +135,25 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .live   { background: #04342C; color: #9FE1CB; }
-  .wip    { background: #412402; color: #FAC775; }
+  :root:not([data-theme="light"]) .live { background: #04342C; color: #9FE1CB; }
+  :root:not([data-theme="light"]) .wip { background: #412402; color: #FAC775; }
 }
+
+:global([data-theme="dark"]) .live { background: #04342C; color: #9FE1CB; }
+:global([data-theme="dark"]) .wip { background: #412402; color: #FAC775; }
 
 .description {
   font-size: 13px;
   color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.footer {
+.meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -110,7 +168,8 @@
   flex-wrap: wrap;
 }
 
-.tag {
+.tag,
+.more {
   font-size: 11px;
   background: var(--hover-bg);
   color: var(--muted);
@@ -118,9 +177,9 @@
   padding: 2px 7px;
 }
 
-.year {
-  font-size: 12px;
-  color: var(--muted);
+.row:hover .tag,
+.row:hover .more {
+  background: var(--bg);
 }
 
 .links {
@@ -129,7 +188,16 @@
   gap: 14px;
 }
 
+.year {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tashqi linklar butun qatorli link ustida bosiladigan bo'lsin */
 .link {
+  position: relative;
+  z-index: 1;
   font-size: 13px;
   color: var(--muted);
   text-decoration: none;
@@ -137,5 +205,113 @@
 }
 
 .link:hover {
+  color: var(--fg);
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px 12px;
+    margin: 0 -12px;
+  }
+
+  .thumb span {
+    font-size: 22px;
+  }
+
+  .head {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* Loyiha sahifasi */
+.back {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 28px;
+}
+
+.back:hover {
+  color: var(--fg);
+}
+
+.detailHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.detailTitle {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.hero {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin: 24px 0 8px;
+}
+
+.detailText {
+  font-size: 15px;
+  color: var(--fg);
+  line-height: 1.8;
+  margin: 20px 0 28px;
+  white-space: pre-line;
+}
+
+.section {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  font-size: 13px;
+  border-radius: 8px;
+  padding: 9px 18px;
+  text-decoration: none;
+  transition: opacity 0.15s, background-color 0.15s, color 0.15s;
+}
+
+.btnPrimary {
+  font-weight: 500;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.btnPrimary:hover {
+  opacity: 0.8;
+}
+
+.btnSecondary {
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.btnSecondary:hover {
+  background: var(--hover-bg);
   color: var(--fg);
 }

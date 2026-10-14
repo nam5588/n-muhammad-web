@@ -89,6 +89,11 @@ export async function getProjects(): Promise<Project[]> {
 	}
 }
 
+/** Bitta loyiha (detal sahifa uchun). Ro'yxatdan olinadi: kesh bitta, API ishlamasa statik zaxira ham ishlaydi */
+export async function getProject(slug: string): Promise<Project | null> {
+	return (await getProjects()).find((p) => p.slug === slug) ?? null;
+}
+
 export async function getProfile(): Promise<Profile | null> {
 	try {
 		const { profile } = await gql<{ profile: Profile | null }>(

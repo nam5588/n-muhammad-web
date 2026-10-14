@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getPosts } from "@/lib/cms";
+import { getPosts, getProjects } from "@/lib/cms";
 import { SITE_URL } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -8,5 +8,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		url: `${SITE_URL}/blog/${post.slug}`,
 		lastModified: new Date(post.updatedAt),
 	}));
-	return [...pages, ...posts];
+	const projects = (await getProjects()).map((p) => ({ url: `${SITE_URL}/projects/${p.slug}` }));
+	return [...pages, ...projects, ...posts];
 }
