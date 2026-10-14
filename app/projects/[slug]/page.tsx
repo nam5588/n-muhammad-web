@@ -49,7 +49,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
 				{project.imageUrl && (
 					// eslint-disable-next-line @next/next/no-img-element
-					<img src={project.imageUrl} alt={`${project.title} screenshot`} width={1200} height={675} className={styles.hero} />
+					<img src={project.imageUrl} alt={`${project.title} screenshot`} className={styles.hero} />
 				)}
 
 				<p className={styles.detailText}>{project.description}</p>
