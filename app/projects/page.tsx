@@ -36,6 +36,17 @@ export default async function Projects() {
         <div className={styles.list}>
           {projects.map((project) => (
             <div key={project.slug} className={styles.project}>
+              {project.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={project.imageUrl}
+                  alt={`${project.title} screenshot`}
+                  width={1200}
+                  height={675}
+                  loading="lazy"
+                  className={styles.image}
+                />
+              )}
               <div className={styles.projectHeader}>
                 <h2 className={styles.projectName}>{project.title}</h2>
                 <span className={`${styles.status} ${statusClass[project.status]}`}>

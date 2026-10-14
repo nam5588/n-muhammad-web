@@ -34,6 +34,18 @@
   border-top: 1px solid var(--border);
 }
 
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--hover-bg);
+  margin-bottom: 16px;
+}
+
 .projectHeader {
   display: flex;
   align-items: center;

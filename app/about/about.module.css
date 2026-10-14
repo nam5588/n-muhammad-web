@@ -38,8 +38,25 @@
   margin-top: 24px;
 }
 
+.email {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.email a {
+  text-underline-offset: 3px;
+}
+
+.email a:hover {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
 .btnSecondary {
   display: inline-block;
+  background: none;
+  cursor: pointer;
   font-family: var(--font-sans);
   font-size: 13px;
   color: var(--muted);

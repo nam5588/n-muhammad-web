@@ -12,7 +12,16 @@ const LANG_ORDER: ActiveDocument["language"][] = ["EN", "KO", "UZ"];
  * Footer'dagi "Resume" tugmasi: popup'da tur va til tanlanadi, keyin PDF yuklab olinadi.
  * Faqat admin'da faol qilingan fayllar ko'rinadi; birorta ham bo'lmasa tugma chiqmaydi.
  */
-export default function ResumeDialog({ docs }: { docs: Pick<ActiveDocument, "type" | "language">[] }) {
+export default function ResumeDialog({
+	docs,
+	label = "Resume",
+	className,
+}: {
+	docs: Pick<ActiveDocument, "type" | "language">[];
+	label?: string;
+	/** Berilmasa footer'dagi kichik tugma ko'rinishi */
+	className?: string;
+}) {
 	const dialog = useRef<HTMLDialogElement>(null);
 	const types = (["RESUME", "PORTFOLIO"] as const).filter((t) => docs.some((d) => d.type === t));
 	const [type, setType] = useState<ActiveDocument["type"]>(types[0] ?? "RESUME");
@@ -27,8 +36,8 @@ export default function ResumeDialog({ docs }: { docs: Pick<ActiveDocument, "typ
 
 	return (
 		<>
-			<button type="button" className={styles.trigger} onClick={() => dialog.current?.showModal()}>
-				Resume
+			<button type="button" className={className ?? styles.trigger} onClick={() => dialog.current?.showModal()}>
+				{label}
 			</button>
 			<dialog
 				ref={dialog}
