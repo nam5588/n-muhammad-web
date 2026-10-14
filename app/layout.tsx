@@ -20,7 +20,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
+		// data-theme tema skripti tomonidan hydration'dan oldin qo'yiladi
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: `
 					(function(){

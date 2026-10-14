@@ -90,10 +90,15 @@
 }
 
 .cta {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
+  text-align: center;
+}
+
+/* Blog: View Projects va About Me ostida, ikkisining kengligida */
+.wide {
+  grid-column: 1 / -1;
 }
 
 .btnPrimary {

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import ResumeDialog from "@/components/ResumeDialog";
 import SocialIcon from "@/components/SocialIcon";
-import { getActiveDocuments, getProfile, pickDocument } from "@/lib/cms";
+import { getActiveDocuments, getProfile } from "@/lib/cms";
 import { SITE_NAME } from "@/lib/site";
 import styles from "./page.module.css";
 
@@ -21,8 +22,6 @@ const FALLBACK = {
 export default async function Home() {
 	const [profile, docs] = await Promise.all([getProfile(), getActiveDocuments()]);
 	const p = profile ?? FALLBACK;
-	const resume = pickDocument(docs, "RESUME");
-	const portfolio = pickDocument(docs, "PORTFOLIO");
 
 	return (
 		<>
@@ -62,23 +61,16 @@ export default async function Home() {
 						<Link href="/about" className={styles.btnSecondary}>
 							About Me
 						</Link>
-						{resume && (
-							<a href="/resume?download=1" className={styles.btnSecondary}>
-								Download Resume
-							</a>
-						)}
-						{portfolio && (
-							<a href="/portfolio" target="_blank" rel="noopener noreferrer" className={styles.btnSecondary}>
-								View Portfolio
-							</a>
-						)}
+						<Link href="/blog" className={`${styles.btnSecondary} ${styles.wide}`}>
+							Blog
+						</Link>
 					</div>
 				</section>
 			</main>
 
 			<footer className={styles.footer}>
 				<span>© {new Date().getFullYear()} {p.name}</span>
-				<span>^ ^</span>
+				<ResumeDialog docs={docs.map(({ type, language }) => ({ type, language }))} />
 			</footer>
 		</>
 	);
